@@ -15,27 +15,20 @@
 
     <section class="container">
         @if(Auth::user()->role_id == 1)
-        <!-- Student Dashboard Views -->
             <h3>Hi {{Auth::user()->name}}!!</h3>
-            <div class="row">
+            @if (Auth::user()->studentaccount)
+              
+              @else
+              <div class="row">
                 <div class="col s12">
                   <div class="card-panel">
-                    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Create Your Student Profile</a>
+                   
+                    <a class="waves-effect waves-light btn" href="/dashboard/account/create-student">Create Your Student Profile</a>
                   </div>
                 </div>
               </div>
-           
-
-            <!-- Modal Structure -->
-            <div id="modal1" class="modal">
-              <div class="modal-content">
-                <h4>Student Form</h4>
-                <x-student-form />
-              </div>
-              <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-              </div>
-            </div>
+            @endif
+          
 
         @elseif(Auth::user()->role_id == 2)
         

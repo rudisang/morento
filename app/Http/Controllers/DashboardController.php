@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Role;
+use App\Models\Student;
 use App\Models\User;
 use App\Models\Landlord;
 
@@ -214,6 +215,62 @@ class DashboardController extends Controller
         
         return redirect('/dashboard')->with("success", "Your Account has been created");
     }
+
+    public function studentForm(){
+ 
+        if(Auth::user()->role_id == 1){
+            if(Auth::user()->studentaccount){
+                return back()->with('info', 'You Have Already Created an Account');
+            }else{
+                return view('/dashboard.create-student');
+            }
+        }else{
+            return back()->with('error', 'You Can Not View This Page');
+        }
+        
+
+    }
+
+    public function createStudent(Request $request){
+
+        $request->validate([
+            'avatar' => 'image|nullable|max:1999',
+            'university' => 'required|string|max:255',
+            'program_of_study' => 'required|string|max:255',
+            'sponsored' => 'required',
+            'bio' => 'required',
+            'monthly_stipend' => 'required',
+            'next_of_kin_name' => 'required|string|max:255',
+            'next_of_kin_mobile' => 'required',
+        ]);
+
+        if($request->hasFile('avatar')){
+            $avatar = $request->avatar->getClientOriginalName().time().'.'.$request->avatar->extension();  
+          // $request->avatar->public_path('avatars', $avatar);
+          $request->avatar->move(public_path('avatars'), $avatar);
+
+
+        } else {
+            $avatar = 'noimage.jpg';
+        }
+
+        $account = new Student;
+        $account->avatar = $avatar;
+        $account->user_id = Auth::user()->id;
+        $account->university = $request->university;
+        $account->bio = $request->bio;
+        $account->program_of_study = $request->program_of_study;
+        $account->sponsored = $request->sponsored;
+        $account->monthly_stipend = $request->monthly_stipend;
+        $account->next_of_kin_name = $request->next_of_kin_name;
+        $account->next_of_kin_mobile = $request->next_of_kin_mobile;
+ 
+        $account->save();
+        
+        return redirect('/dashboard')->with("success", "Your Account has been created");
+
+    }
+
 
     public function deleteUser($id){
        

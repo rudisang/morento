@@ -158,7 +158,7 @@
 
     <section>
       <div class="fixed-action-btn">
-        <a href="#delete" class="btn-floating btn-large red tooltipped modal-trigger" data-position="left" data-tooltip="delete user">
+        <a href="#delete" class="btn-floating btn-large red tooltipped disabled" data-position="left" data-tooltip="delete user" disabled>
           <i class="large material-icons">delete</i>
         </a>
       </div>

@@ -23,7 +23,8 @@ Route::get('/dashboard/account/landlord/{id}', [DashboardController::class, 'edi
 Route::patch('/dashboard/account/landlord/{id}', [DashboardController::class, 'landlordAction']);
 Route::patch('/dashboard/account/resubmit-landlord/{id}', [DashboardController::class, 'landlordResubmission']);
 
-
+Route::get('/dashboard/account/create-student', [DashboardController::class, 'studentForm']);
+Route::post('/dashboard/account/create-student', [DashboardController::class, 'createStudent']);
 Route::get('/dashboard/account/create-landlord', [DashboardController::class, 'landlordForm']);
 Route::get('/dashboard/account', [DashboardController::class, 'editAccount']);
 Route::get('/dashboard/account/user/{id}', [DashboardController::class, 'editUser']);
