@@ -60,6 +60,12 @@
 }
 .gutter-sizer { width: 1%; }
 }
+#map {
+            display:block;
+            margin:0;
+            height: 100vh;
+            width:100%;
+            }
          </style>
     <title>Property</title>
 </head>

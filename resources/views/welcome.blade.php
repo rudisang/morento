@@ -41,7 +41,7 @@
       <div class="grid-item hoverable">
         <img class="materialboxed" src="{{asset('gallery/'.$temp[0])}}" />
           <div style="width:90%;margin:auto">
-              <p><a href="#" class="teal-text" style="font-weight:bold">{{$prop->title}} </a> | <span style="font-weight: bold;top:100px"><i style="font-size:10px" class="material-icons teal-text">location_on</i>{{$prop->location}} </span></p>
+              <p><a href="/properties/{{$prop->id}}" class="teal-text" style="font-weight:bold">{{$prop->title}} </a> | <span style="font-weight: bold;top:100px"><i style="font-size:10px" class="material-icons teal-text">location_on</i>{{$prop->location}} </span></p>
           </div>
       </div>
       @endforeach

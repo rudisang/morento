@@ -5,7 +5,7 @@
     <ul class="slides">
 @foreach ($images as $image)
 <li>
-    <img class="dim materialboxed" src="{{asset('gallery/'.$image)}}"> <!-- random image -->
+    <img style="object-fit: cover" class="dim materialboxed" src="{{asset('gallery/'.$image)}}"> <!-- random image -->
     <div class="caption center-align">
       <h3>{{$property->title}}</h3>
       <h5 class="light grey-text text-lighten-3">BWP {{$property->price}}/mo</h5>
