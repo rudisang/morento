@@ -9,7 +9,7 @@ use App\Models\Role;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\Landlord;
-
+use App\Models\Property;
 
 class DashboardController extends Controller
 {
@@ -354,6 +354,141 @@ class DashboardController extends Controller
     
         }
 
+    }
+
+
+    public function propertyForm(){
+ 
+        if(Auth::user()->role_id == 2){
+            if(Auth::user()->landlordaccount){
+                return view('/dashboard.create-property');
+            }else{
+                return back()->with('warning', 'You need to create an account first');
+            }
+        }else{
+            return back()->with('error', 'You Can Not View This Page');
+        }
+        
+    }
+
+    public function editPropertyForm($id){
+ 
+        if(Auth::user()->role_id == 2){
+            if(Auth::user()->landlordaccount){
+                $property = Property::find($id);
+
+                if($property->user_id == auth()->user()->id){
+                    return view('/dashboard.edit-property')->with('property', $property);
+                }else{
+                    return back()->with('error', 'You do not have permission to edit this property');
+                }
+                
+            }else{
+                return back()->with('warning', 'You need to create an account first');
+            }
+        }else{
+            return back()->with('error', 'You Can Not View This Page');
+        }
+        
+    }
+
+    public function storeProperty(Request $request){
+   
+ 
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'lat' => 'required|string|max:255',
+            'lng' => 'required|string|max:255',
+            'price' => 'required',
+            'type' => 'required|string|max:255',
+            'details' => 'required',
+            'available' => 'required',
+            'gallery' => 'required',
+           
+        ]);
+
+        $gallery = array();
+
+        if($request->hasFile('gallery')){
+            foreach($request->gallery as $image){
+                
+                array_push($gallery, $image->getClientOriginalName().time().'.'.$image->extension());
+                $image->move(public_path('gallery'), $image->getClientOriginalName().time().'.'.$image->extension());
+            }
+
+        }
+
+        $galleryobj = json_encode($gallery);
+
+        
+        $prop = new Property;
+
+        $prop->user_id = auth()->user()->id;
+        $prop->title = $request->title;
+        $prop->location = $request->location;
+        $prop->lat = $request->lat;
+        $prop->lng = $request->lng;
+        $prop->price = $request->price;
+        $prop->type = $request->type;
+        $prop->details = $request->details;
+        $prop->available = $request->available;
+        $prop->gallery = $galleryobj;
+
+        $prop->save();
+
+        return redirect('/dashboard')->with("success", "New Property listing has been created");
+        
+    }
+
+    public function updateProperty(Request $request, $id){
+   
+ 
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'lat' => 'required|string|max:255',
+            'lng' => 'required|string|max:255',
+            'price' => 'required',
+            'type' => 'required|string|max:255',
+            'details' => 'required',
+            'available' => 'required',
+          
+           
+        ]);
+
+        $gallery = array();
+
+        if($request->hasFile('gallery')){
+            foreach($request->gallery as $image){
+                
+                array_push($gallery, $image->getClientOriginalName().time().'.'.$image->extension());
+                $image->move(public_path('gallery'), $image->getClientOriginalName().time().'.'.$image->extension());
+            }
+
+        }
+
+        $galleryobj = json_encode($gallery);
+
+        
+        $prop = Property::find($id);
+
+        $prop->user_id = auth()->user()->id;
+        $prop->title = $request->title;
+        $prop->location = $request->location;
+        $prop->lat = $request->lat;
+        $prop->lng = $request->lng;
+        $prop->price = $request->price;
+        $prop->type = $request->type;
+        $prop->details = $request->details;
+        $prop->available = $request->available;
+        if($request->hasFile('gallery')){
+        $prop->gallery = $galleryobj;}
+
+        $prop->save();
+
+        return redirect('/dashboard')->with("success", "Property listing updated");
+        
     }
 
     /**

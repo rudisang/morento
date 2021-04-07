@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Models\Property;
 
 
 /*
@@ -16,8 +17,32 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $properties = Property::all();
+    return view('welcome')->with('properties',$properties);
 });
+
+Route::get('/properties/{id}', function ($id) {
+    $property = Property::find($id);
+    return view('/property-show')->with('property',$property);
+});
+
+Route::get('/properties', function () {
+    if(request()->has('search')){
+        $search = request()->get('search');
+        $properties = Property::Where('location', 'like', '%'.$search.'%')->orWhere('price', 'like', '%'.$search.'%')->orWhere('type', 'like', '%'.$search.'%')
+        ->paginate(10);
+      }else{
+        $properties = Property::orderBy('created_at','desc')->paginate(20);
+      } 
+   
+    return view('properties')->with('properties',$properties);
+});
+
+Route::get('/dashboard/property/create', [DashboardController::class, 'propertyForm']);
+Route::post('/dashboard/property/create', [DashboardController::class, 'storeProperty']);
+Route::get('/dashboard/property/edit/{id}', [DashboardController::class, 'editPropertyForm']);
+Route::patch('/dashboard/property/edit/{id}', [DashboardController::class, 'updateProperty']);
+Route::delete('/dashboard/property/delete/{id}', [DashboardController::class, 'deleteProperty']);
 
 Route::get('/dashboard/account/landlord/{id}', [DashboardController::class, 'editLandlord']);
 Route::patch('/dashboard/account/landlord/{id}', [DashboardController::class, 'landlordAction']);

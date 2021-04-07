@@ -15,9 +15,9 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons teal-text">menu</i></a>
 
             <!-- PROJECT LOGO-->
-            <a href="#!" class="brand-logo teal-text"><img style="margin-top:10px" width=150 src="{{asset('images/logo.png')}}" alt=""></a>
+            <a href="/" class="brand-logo teal-text"><img style="margin-top:10px" width=150 src="{{asset('images/logo.png')}}" alt=""></a>
             <ul class="right hide-on-med-and-down">
-              <li><a href="#" class="teal-text">Housing</a></li>
+              <li><a href="/properties" class="teal-text">Properties</a></li>
               <li><a href="#" class="teal-text">How it Works</a></li>
               @if (Route::has('login'))
           

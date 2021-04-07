@@ -75,7 +75,10 @@
      <!-- Compiled and minified JavaScript -->
      <script src="{{asset('js/jquery.js')}}"></script>
      <script src="{{asset('js/materialize.min.js')}}"></script>
-     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
      <script src="{{asset('js/main.js')}}"></script>
+     <script src="{{asset('js/editor.js')}}"></script>
+     <script src="{{asset('js/axios.js')}}"></script>
+     @yield('scripts')
 </body>
 </html>

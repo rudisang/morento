@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function studentaccount() {
         return $this->hasOne('App\Models\Student');
     }
+
+    public function properties() {
+        return $this->hasMany('App\Models\Property');
+    }
 }
