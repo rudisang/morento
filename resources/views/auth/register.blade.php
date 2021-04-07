@@ -19,6 +19,32 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
+            <div>
+                <x-label for="surname" :value="__('Surname')" />
+
+                <x-input id="surname" class="block mt-1 w-full" type="text" name="surname" :value="old('surname')" required/>
+            </div>
+
+            <div>
+                <x-label for="mobile" :value="__('Mobile')" />
+
+                <x-input id="mobile" min=71111111 max=71999999 class="block mt-1 w-full" type="number" name="mobile" :value="old('mobile')" required/>
+            </div>
+
+            <div>
+                <x-label for="age" :value="__('DoB')" />
+
+                <x-input id="age" class="block mt-1 w-full" type="date" min=13 max=150 name="age" :value="old('age')" required/>
+            </div>
+
+            <div>
+                <x-label for="gender" :value="__('Gender')" />
+                <select class="form-select mt-1 block w-full" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+            </div>
+
             <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />

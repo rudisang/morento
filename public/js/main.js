@@ -1,10 +1,20 @@
 $(document).ready(function(){
     $('.sidenav').sidenav();
-    $(".dropdown-trigger").dropdown();
+    $(".dropdown-trigger").dropdown({
+      coverTrigger : false,
+      constrainWidth : false,
+    });
     $('.slider').slider();
     $('.materialboxed').materialbox();
+    $('.modal').modal();
+    $('.fixed-action-btn').floatingActionButton();
+    $('.tooltipped').tooltip();
+    $('input#input_text, textarea#textarea2').characterCounter();
+    $('.collapsible').collapsible();
+
 
   });
+
   var $grid = $('.grid').masonry({
     itemSelector: '.grid-item',
     percentPosition: true,

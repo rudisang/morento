@@ -18,6 +18,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'mobile',
+        'age',
+        'gender',
+        'role_id',
         'email',
         'password',
     ];
@@ -40,4 +45,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role() {
+        return $this->belongsTo('App\Models\Role');
+    }
+
+    public function landlordaccount() {
+        return $this->hasOne('App\Models\Landlord');
+    }
+
+    public function studentaccount() {
+        return $this->hasOne('App\Models\Student');
+    }
+
+    public function properties() {
+        return $this->hasMany('App\Models\Property');
+    }
 }

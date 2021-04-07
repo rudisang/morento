@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class side-nav extends Component
+class AdminEditUserPassword extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class side-nav extends Component
      */
     public function render()
     {
-        return view('components.side-nav');
+        return view('components.admin-edit-user-password');
     }
 }
