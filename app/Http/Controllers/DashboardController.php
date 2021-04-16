@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\User;
 use App\Models\Landlord;
 use App\Models\Property;
+use App\Models\Message;
 
 class DashboardController extends Controller
 {
@@ -393,7 +394,7 @@ class DashboardController extends Controller
     }
 
     public function storeProperty(Request $request){
-   
+
  
         $request->validate([
             'title' => 'required|string|max:255',
@@ -489,6 +490,41 @@ class DashboardController extends Controller
 
         return redirect('/dashboard')->with("success", "Property listing updated");
         
+    }
+
+    public function chatIndex()
+    {
+        $messages = Message::all();
+        return view('chat.index')->with('messages', $messages);
+    }
+
+    public function chatShow($id)
+    {
+        $user = User::find($id);
+
+        $mes = Message::where('from','=',$user->id)->where('to','=', Auth::user()->id)->get();
+        $mesgs= Message::where('from','=',Auth::user()->id)->where('to','=', $user->id)->get();
+
+        $messages = $mes->merge($mesgs);
+        
+      
+        return view('chat.show')->with('messages',$messages)->with('user',$user);
+    }
+
+    public function sendMessage(Request $request, $id)
+    {
+        $request->validate([
+            'message'=> 'required',
+        ]);
+
+        Message::create([
+            'user_id' => Auth::user()->id,
+            'to' => $id,
+            'from' => Auth::user()->id,
+            'message' => $request->message,
+        ]);
+
+        return back()->with('success','sent');
     }
 
     /**

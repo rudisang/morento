@@ -1,13 +1,40 @@
 @extends('layouts.main')
 
 @section('content')
-<nav class="grey lighten-3">
-  <div class="container">
-      <div class="nav-wrapper">
-          <form action="/properties" method="get"><input name="search" type="search" placeholder="search"></form>
-      </div>
+
+
+<section class="container">
+  <div class="card-panel" style="border-radius:20px;">
+    <h5>Filter Listings</h5>
+    <form action="/properties" method="get">
+     <div class="row">
+       <div class="col s12 m6">
+        <input name="location" type="search" placeholder="Property Location">
+       </div>
+
+       <div class="input-field col s12 m6">
+        <select name="type" style="display: block">
+             <option value="" selected='selected' disabled>Property Type</option>
+             <option value="Room">Room</option>
+             <option value="Bachelor Pad">Bachelor Pad</option>
+             <option value="House">House</option>
+             <option value="Appartment">Appartment</option>
+             <option value="Servants Quarters">Servants Quarters</option>
+       
+        </select>
+       </div>
+
+       <div class="col s12 m6">
+        <p class="range-field">
+        <input name="range" type="range"  max="{{$properties->max('price')}}" min="{{$properties->min('price')}}">
+        </p>
+       </div>
+     </div>
+    
+     <button type="submit" class="btn">Search</button>
+    </form>
   </div>
-</nav>
+</section>
 
 <section class="container">
     
@@ -15,11 +42,10 @@
        
         
         <li><div id="map"></div></li>
-      </ul> <br><br>
-      <a href="#" data-target="slide-outb" class="sidenav-trigger btn" disabled><i class="material-icons left">map</i>Map view</a><br>
-      <br>
+      </ul> 
    
     <div class="row">
+ 
     @foreach ($properties as $prop)
     @php
     $temp = json_decode($prop->gallery);
@@ -27,7 +53,7 @@
     <div class="col s12 m6 l4">
         <div class="card" style="border-radius:20px 20px 0px 0px">
           <div class="card-image" style="border-radius: 20px">
-            <img class="dim materialboxed" style="border-radius: 20px" src="{{asset('gallery/'.$temp[0])}}">
+            <img class="dim materialboxed" style="border-radius: 20px;max-height:200px !important;object-fit:cover" src="{{asset('gallery/'.$temp[0])}}">
             <span class="card-title">@if ($prop->available)
                 <p class="btn green accent-3 z-depth-0" style="opacity:.6;position:relative;margin-top:-90px;font-weight: bold">Available</p>
                 @else
@@ -51,6 +77,15 @@
     </div>
 </section>
 
+<div class="fixed-action-btn">
+  <a href="#" data-target="slide-outb" class="sidenav-trigger btn btn-floating btn-large"><i class="material-icons left">map</i>Map view</a>
+  
+  
+  <ul>
+  
+  </ul>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -67,7 +102,7 @@ function initMap() {
 const uluru = { lat: -24.397, lng: 25.644  };
 map = new google.maps.Map(document.getElementById("map"), {
 center: { lat: -24.397, lng: 25.644 },
-zoom: 10,
+zoom: 8,
 });
 
 

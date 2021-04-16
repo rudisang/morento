@@ -17,7 +17,18 @@
         @if(Auth::user()->role_id == 1)
             <h3>Hi {{Auth::user()->name}}!!</h3>
             @if (Auth::user()->studentaccount)
+            <div class="card-panel">
               
+            </div>
+
+            <div class="fixed-action-btn">
+              <a href="/chat/room" class="btn-floating btn-large teal">
+                <i class="large material-icons">message</i>
+              </a>
+              <ul>
+              
+              </ul>
+            </div>
               @else
               <div class="row">
                 <div class="col s12">
@@ -27,6 +38,8 @@
                   </div>
                 </div>
               </div>
+              
+              
             @endif
           
 
@@ -53,7 +66,7 @@
                 <div class="row">
                   <div class="col s12">
                     <div class="card-panel">
-                      <h5>My Listings</h5>
+                      <h5>My Listings <a href="/chat/room" class="btn indigo accent-1 right">Chat</a></h5>
                       <x-my-properties />
                     </div>
                   </div>

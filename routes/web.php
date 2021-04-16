@@ -27,9 +27,12 @@ Route::get('/properties/{id}', function ($id) {
 });
 
 Route::get('/properties', function () {
-    if(request()->has('search')){
-        $search = request()->get('search');
-        $properties = Property::Where('location', 'like', '%'.$search.'%')->orWhere('price', 'like', '%'.$search.'%')->orWhere('type', 'like', '%'.$search.'%')
+    if(request()->has('location') || request()->has('type') || request()->has('range')){
+     
+        $search = request()->get('location');
+        $type = request()->get('type');
+        $range = request()->get('range');
+        $properties = Property::Where('location', 'like', '%'.$search.'%')->where('price', '<', $range)->where('type', 'like', '%'.$type.'%')
         ->paginate(10);
       }else{
         $properties = Property::orderBy('created_at','desc')->paginate(20);
@@ -37,6 +40,10 @@ Route::get('/properties', function () {
    
     return view('properties')->with('properties',$properties);
 });
+
+Route::get('/chat/room', [DashboardController::class, 'chatIndex']);
+Route::get('/chat/room/{id}', [DashboardController::class, 'chatShow']);
+Route::post('/chat/send/{id}', [DashboardController::class, 'sendMessage']);
 
 Route::get('/dashboard/property/create', [DashboardController::class, 'propertyForm']);
 Route::post('/dashboard/property/create', [DashboardController::class, 'storeProperty']);
