@@ -54,6 +54,10 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Landlord');
     }
 
+    public function messages() {
+        return $this->hasMany('App\Models\Message');
+    }
+
     public function studentaccount() {
         return $this->hasOne('App\Models\Student');
     }

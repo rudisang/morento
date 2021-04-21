@@ -20,7 +20,7 @@
               </tr>
               @endforeach
           @else
-nope
+
           @endif
 
         </tbody>
